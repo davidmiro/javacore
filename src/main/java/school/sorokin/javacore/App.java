@@ -7,10 +7,10 @@ public class App {
     private static String[] names = new String[100];
     private static String[] phoneNumbers = new String[100];
     private static int contactCount = 0;
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nContact Management System");
             System.out.println("1. Add new contact");
@@ -20,28 +20,33 @@ public class App {
             System.out.println("5. Exit");
             System.out.print("Choose an action: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            switch (choice) {
-                case 1:
-                    addContact(scanner);
-                    break;
-                case 2:
-                    viewContacts();
-                    break;
-                case 3:
-                    findContact(scanner);
-                    break;
-                case 4:
-                    removeContact(scanner);
-                    break;
-                case 5:
-                    System.out.println("Program terminated.");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid choice. Try again.");
+            String userInput = scanner.nextLine();
+            if (userInput.matches("\\d+")) {
+                int choice = Integer.parseInt(userInput);
+                switch (choice) {
+                    case 1:
+                        addContact(scanner);
+                        break;
+                    case 2:
+                        viewContacts();
+                        break;
+                    case 3:
+                        findContact(scanner);
+                        break;
+                    case 4:
+                        removeContact(scanner);
+                        break;
+                    case 5:
+                        System.out.println("Program terminated.");
+                        scanner.close();
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Try again.");
+                }
+            } else {
+                System.out.println("Please enter a valid number.");
             }
+
         }
     }
 
@@ -63,6 +68,26 @@ public class App {
             System.out.println("Phone number cannot be empty!");
             return;
         }
+        if (!phoneNumber.matches("\\d+")) {
+            System.out.println("Phone number must be digits");
+            return;
+        }
+        for (int i = 0; i < contactCount; i++) {
+            if (name.equalsIgnoreCase(names[i])) {
+                System.out.printf("Contact %s exists ", name);
+                System.out.printf("Phone number for this contact: %s", phoneNumbers[i]);
+                System.out.println("Change the information for this contact Y/N?");
+                String readInput = scanner.nextLine();
+                if (readInput.equalsIgnoreCase("y")) {
+                    names[i] = name;
+                    phoneNumbers[i] = phoneNumber;
+                    System.out.println("Contact updated!");
+                } else {
+                    System.out.println("Contact not added");
+                }
+                return;
+            }
+        }
         names[contactCount] = name;
         phoneNumbers[contactCount] = phoneNumber;
         contactCount++;
@@ -71,6 +96,10 @@ public class App {
     }
 
     private static void viewContacts() {
+        if (contactCount == 0) {
+            System.out.println("No contacts found.");
+            return;
+        }
         for (int i = 0; i < contactCount; i++) {
             System.out.println(names[i] + " - " + phoneNumbers[i]);
         }
@@ -82,13 +111,13 @@ public class App {
         boolean found = false;
         for (int i = 0; i < contactCount; i++) {
             if (findName.equalsIgnoreCase(names[i])) {
-                System.out.print("The phone number is: " + phoneNumbers[i]);
+                System.out.println("The phone number is: " + phoneNumbers[i]);
                 found = true;
                 break;
             }
         }
         if (!found) {
-            System.out.println("Contact not found.");
+            System.out.printf("Contact %s not found.", findName);
         }
     }
 
@@ -97,13 +126,14 @@ public class App {
         String nameToRemove = scanner.nextLine();
         for (int i = 0; i < contactCount; i++) {
             if (nameToRemove.equals(names[i])) {
-                for (int j = i; j <= contactCount - 1; j++) {
+                for (int j = i; j < contactCount - 1; j++) {
                     names[j] = names[j + 1];
                     phoneNumbers[j] = phoneNumbers[j + 1];
                 }
                 names[contactCount - 1] = null;
                 phoneNumbers[contactCount - 1] = null;
                 contactCount--;
+                System.out.printf("Contact %s removed\n", nameToRemove);
                 break;
             }
         }
