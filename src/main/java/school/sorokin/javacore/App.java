@@ -75,7 +75,7 @@ public class App {
         for (int i = 0; i < contactCount; i++) {
             if (name.equalsIgnoreCase(names[i])) {
                 System.out.printf("Contact %s exists ", name);
-                System.out.printf("Phone number for this contact: %s", phoneNumbers[i]);
+                System.out.printf("Phone number for this contact: %s \n", phoneNumbers[i]);
                 System.out.println("Change the information for this contact Y/N?");
                 String readInput = scanner.nextLine();
                 if (readInput.equalsIgnoreCase("y")) {
