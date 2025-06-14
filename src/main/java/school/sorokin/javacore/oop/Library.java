@@ -39,6 +39,5 @@ public class Library {
                 System.out.println("No publications found for this author.");
             }
         }
-
     }
 }

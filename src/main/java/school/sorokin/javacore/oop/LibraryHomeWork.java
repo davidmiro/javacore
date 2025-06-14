@@ -119,11 +119,12 @@ public class LibraryHomeWork {
             }
         }
     }
+
     private static String readValidateIsbn(Scanner sc) {
         while (true) {
             System.out.println("Enter book ISBN: ");
             String userInput = sc.nextLine();
-            if (userInput.matches("\\d{10}") || userInput.matches("\\d{13}")){
+            if (userInput.matches("\\d{10}") || userInput.matches("\\d{13}")) {
                 return userInput;
             } else {
                 System.out.println("ISBN must be 10 or 13 digits");
