@@ -1,7 +1,7 @@
 package school.sorokin.javacore.oop;
 
 public class Newspaper extends Publication implements Printable {
-    String publicationDay;
+    private String publicationDay;
 
     public Newspaper(String title, String author, int year, String publicationDay) {
         super(title, author, year);

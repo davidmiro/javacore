@@ -1,10 +1,8 @@
 package school.sorokin.javacore.oop;
 
 public class Book extends Publication implements Printable {
-    String isbn;
+    private String isbn;
 
-    public Book() {
-    }
 
     public Book(String title, String author, int year, String isbn) {
         super(title, author, year);

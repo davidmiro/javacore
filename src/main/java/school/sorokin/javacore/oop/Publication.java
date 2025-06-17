@@ -6,11 +6,7 @@ public abstract class Publication {
     private String title;
     private String author;
     private int year;
-    private static int publicationCount = 0;
 
-    public Publication() {
-
-    }
 
     public abstract String getType();
 
@@ -19,12 +15,8 @@ public abstract class Publication {
         this.title = title;
         this.author = author;
         this.year = year;
-        publicationCount++;
     }
 
-    public static int getPublicationCount() {
-        return publicationCount;
-    }
 
     public String getTitle() {
         return title;

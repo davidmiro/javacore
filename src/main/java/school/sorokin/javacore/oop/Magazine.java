@@ -1,7 +1,7 @@
 package school.sorokin.javacore.oop;
 
 public class Magazine extends Publication implements Printable {
-    int issueNumber;
+    private int issueNumber;
 
     public Magazine(String title, String author, int year, int issueNumber) {
         super(title, author, year);

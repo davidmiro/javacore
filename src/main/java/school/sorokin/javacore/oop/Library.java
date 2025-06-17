@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-    private List<Publication> publications;
+    private final List<Publication> publications;
+    private int publicationCount = 0;
 
     public Library() {
         publications = new ArrayList<>();
@@ -12,14 +13,23 @@ public class Library {
 
     public void addPublication(Publication pub) {
         publications.add(pub);
+        publicationCount++;
     }
+    public int getPublicationCount() {
+        return publicationCount;
+    }
+
 
     public void listPublications() {
         if (publications.isEmpty()) {
             System.out.println("No publications found.");
         } else {
             for (Publication pub : publications) {
-                System.out.println(pub.toString());
+                if (pub instanceof Printable) {
+                    ((Printable) pub).printDetails();
+                } else {
+                    System.out.println(pub);
+                }
             }
         }
     }

@@ -2,7 +2,6 @@ package school.sorokin.javacore.oop;
 
 import java.util.Scanner;
 
-import static school.sorokin.javacore.oop.Publication.getPublicationCount;
 
 public class LibraryHomeWork {
     public static void main(String[] args) {
@@ -10,12 +9,14 @@ public class LibraryHomeWork {
         Library library = new Library();
 
         while (true) {
-            System.out.println("Choose an option: ");
-            System.out.println("1. Add new publication");
-            System.out.println("2. Display a list of all publications.");
-            System.out.println("3. Search for publication by author.");
-            System.out.println("4. Display total number of publications");
-            System.out.println("0. Exit");
+            System.out.println(
+                    "Choose an option:\n" +
+                            "1. Add new publication\n" +
+                            "2. Display a list of all publications.\n" +
+                            "3. Search for publication by author.\n" +
+                            "4. Display total number of publications\n" +
+                            "0. Exit"
+            );
 
             String userInput = sc.nextLine();
             if (userInput.matches("\\d+")) {
@@ -68,7 +69,7 @@ public class LibraryHomeWork {
                         library.searchByAuthor(authorToSearch);
                         break;
                     case 4:
-                        System.out.println("Total publications:  " + getPublicationCount());
+                        System.out.println("Total publications:  " + library.getPublicationCount());
                         break;
                     case 0:
                         System.out.println("Program terminated.");
