@@ -1,13 +1,141 @@
 package school.sorokin.javacore;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+
+import java.util.Scanner;
+
+public class App {
+    private static String[] names = new String[100];
+    private static String[] phoneNumbers = new String[100];
+    private static int contactCount = 0;
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        while (true) {
+            System.out.println("\nContact Management System");
+            System.out.println("1. Add new contact");
+            System.out.println("2. View all contacts");
+            System.out.println("3. Find contact");
+            System.out.println("4. Delete contact");
+            System.out.println("5. Exit");
+            System.out.print("Choose an action: ");
+
+            String userInput = scanner.nextLine();
+            if (userInput.matches("\\d+")) {
+                int choice = Integer.parseInt(userInput);
+                switch (choice) {
+                    case 1:
+                        addContact(scanner);
+                        break;
+                    case 2:
+                        viewContacts();
+                        break;
+                    case 3:
+                        findContact(scanner);
+                        break;
+                    case 4:
+                        removeContact(scanner);
+                        break;
+                    case 5:
+                        System.out.println("Program terminated.");
+                        scanner.close();
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Try again.");
+                }
+            } else {
+                System.out.println("Please enter a valid number.");
+            }
+
+        }
+    }
+
+    private static void addContact(Scanner scanner) {
+        if (contactCount >= names.length) {
+            System.out.println("Contact limit reached!");
+            return;
+        }
+        System.out.println("Enter name ");
+        String name = scanner.nextLine();
+        System.out.println("Enter phone number: ");
+        String phoneNumber = scanner.nextLine();
+
+        if (name.trim().isEmpty()) {
+            System.out.println("Name cannot be empty!");
+            return;
+        }
+        if (phoneNumber.trim().isEmpty()) {
+            System.out.println("Phone number cannot be empty!");
+            return;
+        }
+        if (!phoneNumber.matches("\\d+")) {
+            System.out.println("Phone number must be digits");
+            return;
+        }
+        for (int i = 0; i < contactCount; i++) {
+            if (name.equalsIgnoreCase(names[i])) {
+                System.out.printf("Contact %s exists ", name);
+                System.out.printf("Phone number for this contact: %s \n", phoneNumbers[i]);
+                System.out.println("Change the information for this contact Y/N?");
+                String readInput = scanner.nextLine();
+                if (readInput.equalsIgnoreCase("y")) {
+                    names[i] = name;
+                    phoneNumbers[i] = phoneNumber;
+                    System.out.println("Contact updated!");
+                } else {
+                    System.out.println("Contact not added");
+                }
+                return;
+            }
+        }
+        names[contactCount] = name;
+        phoneNumbers[contactCount] = phoneNumber;
+        contactCount++;
+
+        System.out.println("Contact successfully added!");
+    }
+
+    private static void viewContacts() {
+        if (contactCount == 0) {
+            System.out.println("No contacts found.");
+            return;
+        }
+        for (int i = 0; i < contactCount; i++) {
+            System.out.println(names[i] + " - " + phoneNumbers[i]);
+        }
+    }
+
+    private static void findContact(Scanner scanner) {
+        System.out.println("Enter the name");
+        String findName = scanner.nextLine();
+        boolean found = false;
+        for (int i = 0; i < contactCount; i++) {
+            if (findName.equalsIgnoreCase(names[i])) {
+                System.out.println("The phone number is: " + phoneNumbers[i]);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.printf("Contact %s not found.", findName);
+        }
+    }
+
+    private static void removeContact(Scanner scanner) {
+        System.out.println("Enter name to delete");
+        String nameToRemove = scanner.nextLine();
+        for (int i = 0; i < contactCount; i++) {
+            if (nameToRemove.equals(names[i])) {
+                for (int j = i; j < contactCount - 1; j++) {
+                    names[j] = names[j + 1];
+                    phoneNumbers[j] = phoneNumbers[j + 1];
+                }
+                names[contactCount - 1] = null;
+                phoneNumbers[contactCount - 1] = null;
+                contactCount--;
+                System.out.printf("Contact %s removed\n", nameToRemove);
+                break;
+            }
+        }
     }
 }
