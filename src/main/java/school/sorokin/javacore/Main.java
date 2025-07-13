@@ -50,14 +50,45 @@ public class Main {
                         }
                         break;
                     case 4:
-                        System.out.println("Enter number of book copies: ");
-                        int bookCopiesNumber = scanner.nextInt();
+                        int bookCopiesNumber;
+                        while (true) {
+                            System.out.println("Enter number of book copies: ");
+                            if (scanner.hasNextInt()) {
+                                bookCopiesNumber = scanner.nextInt();
+                                scanner.nextLine();
+                                if (bookCopiesNumber < 0 ) {
+                                    System.out.println("Number of copies can't be negative. Try again.");
+                                } else {
+                                    break;
+                                }
+                            } else {
+                                System.out.println("Invalid input. Enter a number.");
+                                scanner.nextLine();
+                            }
+                        }
                         scanner.nextLine();
-                        System.out.println("Enter the title of the book to add: ");
-                        String bookToAdd = scanner.nextLine();
-                        System.out.println("Enter book author name: ");
-                        String bookAuthorName = scanner.nextLine();
-                        library.addBook(bookCopiesNumber, bookToAdd, bookAuthorName);
+                        String bookTitle;
+                        while (true) {
+                            System.out.println("Enter the title of the book to add: ");
+                            bookTitle = scanner.nextLine().trim();
+                            if (bookTitle.isEmpty()) {
+                                System.out.println("Title can't be empty. Try again.");
+                            } else {
+                                break;
+                            }
+                        }
+                        String bookAuthorName;
+                        while (true) {
+                            System.out.println("Enter book author name: ");
+                            bookAuthorName = scanner.nextLine().trim();
+                            if (bookAuthorName.isEmpty()) {
+                                System.out.println("Author can't be empty. Try again.");
+                            } else {
+                                break;
+                            }
+                        }
+
+                        library.addBook(bookCopiesNumber, bookTitle, bookAuthorName);
                         break;
                     case 5:
                         System.out.println("Program terminated.");
